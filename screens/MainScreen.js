@@ -1,8 +1,11 @@
-import { View, Text, StyleSheet, Switch, TextInput, Pressable, SafeAreaView, ScrollView } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Switch, SafeAreaView, ScrollView } from 'react-native';
 import RadioGroup from 'react-native-radio-buttons-group';
+import CustomButton from '../components/CustomButton';
+import CustomInput from '../components/CustomInput';
+import React, { useEffect, useState } from 'react';
 import ItemList from '../components/ItemList';
 import '../global';
+import { useForm } from 'react-hook-form';
 
 
 
@@ -138,10 +141,12 @@ const MainScreen = () => {
   const [wantGlass, setWantGlass] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const {control, handleSubmit, formState: { errors }} = useForm();
 
   useEffect(() => {
     updatePrice();
-  }, [orderedJuices, selectedSize, extraInventory, wantGlass]);
+    console.log(shoppingCart);
+  }, [orderedJuices, selectedSize, extraInventory, wantGlass,shoppingCart]);
 
   //handles putting bottle size into selected state
   function onPressRadioButton(radioButtonsArray) {
@@ -252,7 +257,7 @@ const MainScreen = () => {
     setCurrentOrder([...inOrderJuices, ...inOrderExtras, [selectedSize, wantGlass]]);
   };
 
-  function handleSubmit() {
+  function onSubmitPressed() {
     setShoppingCart((currentCart => [...currentCart, currentOrder]));
     setCurrentOrder([]);
     //reset buttons, later should be api call not just reset to initial state
@@ -266,18 +271,18 @@ const MainScreen = () => {
     <SafeAreaView style={styles.mainContainer}>
       <ScrollView>
         <View style={styles.controlContainer}>
-          <View style={styles.nameContainer}>
-            <TextInput
-              style={styles.nameInput}
-              placeholder='Teljes név'
-              onChangeText={handleNameChange} />
-          </View>
-          <View style={styles.nameContainer}>
-            <TextInput
-              style={styles.nameInput}
-              placeholder='E-mail'
-              onTextChange={handleEmailChange} />
-          </View>
+          <CustomInput 
+          placeholder={'Teljes Nev'}
+          control = {control}
+          name = 'name'
+          rules={{required: true}}
+          />
+          <CustomInput 
+          placeholder={'E-Mail'}
+          control = {control}
+          name = 'email'
+          rules={{required: true}}
+          />
           <View style={styles.glassContainer}>
             <Text style={styles.glassText}>Üveg szükséges?</Text>
             <Switch
@@ -310,11 +315,10 @@ const MainScreen = () => {
 
         </View>
         <View style={styles.priceConatiner}>
-          <Pressable
-            style={styles.submitButton}
-            onPress={handleSubmit}>
-            <Text style={styles.submitText}>Submit</Text>
-          </Pressable>
+          <CustomButton 
+          onPress={onSubmitPressed}
+          text={'Küldés'}
+          type={'PRIMARY'}/>
           <Text style={styles.priceText}>Fizetendő: {price} Ft</Text>
         </View>
       </ScrollView>
@@ -327,7 +331,8 @@ const styles = StyleSheet.create({
   mainContainer: {
     width: '100%',
     height: '100%',
-    padding: 32
+    padding: 32,
+    backgroundColor: 'white'
   },
 
   itemListContainer: {
@@ -395,26 +400,6 @@ const styles = StyleSheet.create({
   glassText: {
     fontSize: 24,
     fontWeight: 'bold',
-  },
-  nameInput: {
-    borderColor: GOLDEN_ORANGE,
-    borderWidth: .5,
-    borderRadius: 3,
-    padding: 6,
-    width: '80%',
-    height: '100%'
-  },
-  nameContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 6,
-
-  },
-
-  submitButton: {
-    backgroundColor: GOLDEN_ORANGE,
-    padding: 12,
-    borderRadius: 5
   },
 });
 
