@@ -5,7 +5,7 @@ import '../global'
 import CustomButton from '../components/CustomButton'
 import { useNavigation } from '@react-navigation/native'
 import { useForm } from 'react-hook-form'
-import { Button, Text } from '@react-native-material/core'
+import { Button, HStack, Surface, Text } from '@react-native-material/core'
 
 const LogInScreen = () => {
 
@@ -24,29 +24,35 @@ const LogInScreen = () => {
     }
     return (
         <KeyboardAvoidingView style={styles.mainContainer} behavior={'padding'}>
-            <View style={styles.logoContainer}>
-                <Image style={styles.logo} source={require('../assets/Logos/Pras_png.png')}/>
-            </View>
-            <View style={styles.interactiveContainer}>
-                <View style={styles.titleContainer}>
-                    <Text style={styles.title}>Kérem adja meg a belépő kódját!</Text>
+            <Surface elevation={0} style={styles.surfaceOuter}>
+                <View style={styles.logoContainer}>
+                    <Image style={styles.logo} source={require('../assets/Logos/Pras_png.png')} />
                 </View>
-                <View style={styles.controlsContainer}>
-                    <View style={styles.inputContainer}>
-                        <CustomInput
-                            control={control}
-                            name='code'
-                            placeholder={'Belépő kód'}
-                            type={'LOGIN'}
-                            rules={{ required: 'A kód megadása kötelező' }} />
-                    </View>
+                <Surface elevation={0} style={styles.surface}>
+                    <View style={styles.interactiveContainer}>
 
-                    <View style={styles.buttonContainer}>
-                        <Button color={GOLDEN_ORANGE} title={'Belépés'} onPress={handleSubmit(onLogInPress)}/>
-                        {/* <CustomButton text={'Belépés'} type={'PRIMARY'} onPress={handleSubmit(onLogInPress)} /> */}
+                        <View style={styles.titleContainer}>
+                            <Text style={styles.title}>Kérem adja meg a belépő kódját!</Text>
+                        </View>
+                        <View style={styles.controlsContainer}>
+                            <View style={styles.inputContainer}>
+                                <CustomInput
+                                    control={control}
+                                    name='code'
+                                    placeholder={'Belépő kód'}
+                                    type={'LOGIN'}
+                                    rules={{ required: 'A kód megadása kötelező' }} />
+                            </View>
+
+                            <View style={styles.buttonContainer}>
+                                <Button color={GOLDEN_ORANGE} title={'Belépés'} onPress={handleSubmit(onLogInPress)} />
+                                {/* <CustomButton text={'Belépés'} type={'PRIMARY'} onPress={handleSubmit(onLogInPress)} /> */}
+                            </View>
+                        </View>
+
                     </View>
-                </View>
-            </View>
+                </Surface>
+            </Surface>
         </KeyboardAvoidingView>
     )
 }
@@ -57,9 +63,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         height: '100%',
         backgroundColor: '#fff',
-        padding: 12
+        padding: 20
         //borderColor: 'red',
-       // borderWidth: 1
+        // borderWidth: 1
     },
     title: {
         fontWeight: '600',
@@ -71,11 +77,11 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         padding: 6,
         margin: 6,
-       // borderColor: 'blue',
-      //  borderWidth: 1
+        // borderColor: 'blue',
+        //  borderWidth: 1
     },
     controlsContainer: {
-       // borderColor: 'green',
+        // borderColor: 'green',
         //borderWidth: 1,
         width: '100%',
         padding: 6
@@ -86,21 +92,26 @@ const styles = StyleSheet.create({
     inputContainer: {
 
     },
-    logoContainer:{
-        alignItems:'center',
-       // borderColor: 'orange',
+    logoContainer: {
+        alignItems: 'center',
+        // borderColor: 'orange',
         //borderWidth:1,
-        flex: 4
-
+        flex: 2
     },
-    logo:{
-        maxWidth:'100%',
+    logo: {
+        maxWidth: '100%',
         maxHeight: '100%',
 
+
     },
-    interactiveContainer:{
-        flex:3
+    interactiveContainer: {
+        marginBottom: 32
+
+
     },
+   
+
+
 })
 
 export default LogInScreen

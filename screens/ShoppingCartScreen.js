@@ -77,47 +77,49 @@ const ShoppingCartScreen = ({ route, navigation }) => {
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <Text>Nincs semmi a kosarban</Text>
           </View>
-        ) : (<View style={styles.mainContent}>
-          {updatedShoppingCart.map((order, index) => (
-            <Surface key={index} style={styles.card} elevation={6}>
-              <View style={styles.imageContainer}>
-                <Image source={require('../assets/AppleLookingJuices/PNTN-20220902-015_50.jpg')} resizeMode='cover' style={styles.image} />
-              </View>
-              <View style={styles.bottomContainer}>
-                <View style={styles.itemContainer}>
-                  <View style={styles.juicesContainer}>
-                    <Text style={[styles.baseText, styles.title]}>Ízek: </Text>
-                    {order.filter(item => typeof item === 'string').map(name => (
-                      <Text style={styles.itemNameText} key={name}>-{name}</Text>
-                    ))}
-                  </View>
-                  <View style={styles.infoContainer}>
-                    <Text style={[styles.baseText, styles.title]}>Részletek: </Text>
-                    {/*individual item price*/}
-                    <Text style={[styles.baseText, styles.itemPriceText]}>Ár: {order[order.length - 1][2]} Ft</Text>
-                    <Text style={styles.baseText}>Méret: {order[order.length - 1][1]}l</Text>
-                    {order[order.length - 1][0] ? <Text style={styles.baseText}>Uveg rendelve</Text> : <></>}
+        )
+          :
+          (<View style={styles.mainContent}>
+            {updatedShoppingCart.map((order, index) => (
+              <Surface key={index} style={styles.card} elevation={6}>
+                <View style={styles.imageContainer}>
+                  <Image source={require('../assets/AppleLookingJuices/PNTN-20220902-015_50.jpg')} resizeMode='cover' style={styles.image} />
+                </View>
+                <View style={styles.bottomContainer}>
+                  <View style={styles.itemContainer}>
+                    <View style={styles.juicesContainer}>
+                      <Text style={[styles.baseText, styles.title]}>Ízek: </Text>
+                      {order.filter(item => typeof item === 'string').map(name => (
+                        <Text style={styles.itemNameText} key={name}>-{name}</Text>
+                      ))}
+                    </View>
+                    <View style={styles.infoContainer}>
+                      <Text style={[styles.baseText, styles.title]}>Részletek: </Text>
+                      {/*individual item price*/}
+                      <Text style={[styles.baseText, styles.itemPriceText]}>Ár: {order[order.length - 1][2]} Ft</Text>
+                      <Text style={styles.baseText}>Méret: {order[order.length - 1][1]}l</Text>
+                      {order[order.length - 1][0] ? <Text style={styles.baseText}>Uveg rendelve</Text> : <></>}
 
-                    <Text style={styles.baseText}>Név:{order[order.length - 2][0]}</Text>
-                    <View style={{ flexDirection: 'row' }}>
-                      <Text style={styles.baseText}>{order[order.length - 2][1]}</Text>
+                      <Text style={styles.baseText}>Név:{order[order.length - 2][0]}</Text>
+                      <View style={{ flexDirection: 'row' }}>
+                        <Text style={styles.baseText}>{order[order.length - 2][1]}</Text>
+                      </View>
                     </View>
                   </View>
-                </View>
-                <View style={styles.removeButtonContainer}>
-                  <Button color={GOLDEN_ORANGE} title='Eltávolít' onPress={handleRemoveItem} variant={'outlined'}/>
+                  <View style={styles.removeButtonContainer}>
+                    <Button color={GOLDEN_ORANGE} title='Eltávolít' onPress={handleRemoveItem} variant={'outlined'} titleStyle={{ fontSize: 16 }} />
 
+                  </View>
                 </View>
-              </View>
-            </Surface>
-          ))}
-        </View>)}
+              </Surface>
+            ))}
+          </View>)}
 
       </ScrollView>
       <View style={styles.footer}>
         {/* <CustomButton text={'Vissza'} type={'SECONDARY'} onPress={handleBackPress} /> */}
-        <Button title='Vissza' color={GOLDEN_ORANGE} onPress={handleBackPress} />
-        <Text style={[styles.baseText, styles.totalPriceText]}>Teljes ár: {totalPrice} Ft</Text>
+        <Button title='Vissza' color={GOLDEN_ORANGE} onPress={handleBackPress} titleStyle={{ fontSize: 16 }} />
+        <Text style={ styles.totalPriceText}>Teljes ár: {totalPrice} Ft</Text>
       </View>
     </SafeAreaView>
   );
@@ -134,12 +136,11 @@ const styles = StyleSheet.create({
   card: {
     width: '90%',
     backgroundColor: 'white',
-    borderColor: 'black',
+    borderColor: GOLDEN_ORANGE,
     borderWidth: 3,
     borderRadius: 7,
     marginBottom: 12,
 
-    elevation: 1,
   },
   juicesContainer: {
     //borderColor: 'green',
@@ -148,11 +149,13 @@ const styles = StyleSheet.create({
   },
   itemNameText: {
     fontSize: 16,
+    color:'white'
 
   },
   infoContainer: {
     //borderColor: 'blue',
     //borderWidth: 2,
+    marginBottom:12
 
   },
   itemPriceText: {
@@ -168,12 +171,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
     backgroundColor: 'white',
-    padding: 6
+    borderTopColor:'black',
+    borderTopWidth: 1,
+    padding: 20
   },
   itemContainer: {
     flexDirection: 'row',
@@ -185,26 +186,33 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: '100%',
-    maxHeight: 250
-
+    maxHeight: 250,
+    
   },
   image: {
     width: '100%',
     height: '100%',
+    borderTopLeftRadius: 4,
+    borderTopRightRadius: 4,
 
   },
   baseText: {
 
-
+    color:'white'
   },
   title: {
     fontSize: 30,
   },
   bottomContainer: {
-    padding: 6,
+    padding: 20,
+    backgroundColor:'#263238',
+    borderBottomLeftRadius: 4,
+    borderBottomRightRadius: 4,
   },
   totalPriceText: {
-    fontSize: 24,
+    fontSize: 20,
+    color:'black',
+    fontWeight: 'bold'
 
   },
   scroll: {

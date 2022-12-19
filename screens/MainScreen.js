@@ -273,7 +273,10 @@ const MainScreen = ({ route }) => {
     setCurrentOrder([[...inOrderJuices, ...inOrderExtras, [getValues().name, getValues().email], [wantGlass, selectedSize, price]]]);
   };
 
-  function onSubmitPressed(data) {
+  function onSubmitPressed() {
+   if(price === 0){
+    return
+   }
     setShoppingCart((currentCart => [...currentCart, ...currentOrder]));
     setCurrentOrder([]);
     //reset buttons, later should be api call not just reset to initial state
@@ -350,14 +353,14 @@ const MainScreen = ({ route }) => {
           </View>
         </ScrollView>
 
-        <Flex ph={3} w={'100%'} h={'6%'} direction={'row'} justify='between'  style={styles.footer}>
-          <Flex direction='row' items='center' content='center'>
-            <Button title={'Kosárba'} color={GOLDEN_ORANGE} onPress={handleSubmit(onSubmitPressed)} tintColor={'white'} titleStyle={{color: 'black'}}/>
+        <Flex p={18} w={'100%'} h={'8%'} direction={'row'} justify='between'  style={styles.footer}>
+          <Flex direction='row' items='center' content='center' >
+            <Button title={'Kosárba'} color={GOLDEN_ORANGE} onPress={handleSubmit(onSubmitPressed)} tintColor={'white'} titleStyle={{color: 'black', fontSize:16}} />
 
               <IconButton icon={props => <Icon name='cart' {...props} />} color={GOLDEN_ORANGE} onPress={() => { navigation.navigate('Shopping Cart', { shoppingCart }) }} />
           </Flex>
           <Flex items='center' justify='center' mr={12}>
-            <Text>Fizetendő: {price} ft</Text>
+            <Text style={styles.priceText}>Fizetendő: {price} ft</Text>
           </Flex>
         </Flex>
       </SafeAreaView>
@@ -392,24 +395,24 @@ const styles = StyleSheet.create({
   },
 
   footer: {
-    
+    borderTopColor:'black',
+    borderTopWidth: 1
   },
 
   priceText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: GOLDEN_ORANGE,
-  },
+   },
 
   controlContainer: {
     //borderColor: 'red',
     //borderWidth: 2,
     flex: 1,
-    padding: 6,
+    padding: 12,
   },
 
   allListContainer: {
-    padding: 6,
+    padding: 20,
 
     margin: 6,
     borderColor: 'black',
@@ -456,7 +459,9 @@ const styles = StyleSheet.create({
     marginVertical: 24,
   },
   inputContainer: {
-
+    borderBottomColor: GREY,
+    borderBottomWidth:.7,
+    paddingBottom:18,
     marginVertical: 12
   }
 });
