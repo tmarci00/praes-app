@@ -1,10 +1,11 @@
-import { View, Text, StyleSheet, TextInput } from 'react-native'
+import { View, StyleSheet, Image, KeyboardAvoidingView } from 'react-native'
 import React, { useState } from 'react'
 import CustomInput from '../components/CustomInput'
 import '../global'
 import CustomButton from '../components/CustomButton'
 import { useNavigation } from '@react-navigation/native'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
+import { Button, Text } from '@react-native-material/core'
 
 const LogInScreen = () => {
 
@@ -15,7 +16,6 @@ const LogInScreen = () => {
 
     function onLogInPress(data) {
         //authenticate!!
-        console.log(data);
         navigation.navigate('Main');
     }
 
@@ -23,19 +23,31 @@ const LogInScreen = () => {
         setCode(value);
     }
     return (
-        <View style={styles.mainContainer}>
-            <View style={styles.titleContainer}>
-                <Text style={styles.title}>Kérem adja meg a belépő kódját!</Text>
+        <KeyboardAvoidingView style={styles.mainContainer} behavior={'padding'}>
+            <View style={styles.logoContainer}>
+                <Image style={styles.logo} source={require('../assets/Logos/Pras_png.png')}/>
             </View>
-            <CustomInput
-                control={control}
-                name='code'
-                placeholder={'Belépő kód'}
-                type={'LOGIN'} 
-                rules={{required: 'A kód megadása kötelező'}}/>
+            <View style={styles.interactiveContainer}>
+                <View style={styles.titleContainer}>
+                    <Text style={styles.title}>Kérem adja meg a belépő kódját!</Text>
+                </View>
+                <View style={styles.controlsContainer}>
+                    <View style={styles.inputContainer}>
+                        <CustomInput
+                            control={control}
+                            name='code'
+                            placeholder={'Belépő kód'}
+                            type={'LOGIN'}
+                            rules={{ required: 'A kód megadása kötelező' }} />
+                    </View>
 
-            <CustomButton text={'Belépés'} type={'PRIMARY'} onPress={handleSubmit(onLogInPress)} />
-        </View>
+                    <View style={styles.buttonContainer}>
+                        <Button color={GOLDEN_ORANGE} title={'Belépés'} onPress={handleSubmit(onLogInPress)}/>
+                        {/* <CustomButton text={'Belépés'} type={'PRIMARY'} onPress={handleSubmit(onLogInPress)} /> */}
+                    </View>
+                </View>
+            </View>
+        </KeyboardAvoidingView>
     )
 }
 
@@ -44,19 +56,51 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         height: '100%',
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        padding: 12
+        //borderColor: 'red',
+       // borderWidth: 1
     },
     title: {
         fontWeight: '600',
-        fontSize: 20,
+        fontSize: 32,
 
     },
     titleContainer: {
         borderBottomColor: GREY,
         borderBottomWidth: 1,
         padding: 6,
-        marginBottom: 6
-    }
+        margin: 6,
+       // borderColor: 'blue',
+      //  borderWidth: 1
+    },
+    controlsContainer: {
+       // borderColor: 'green',
+        //borderWidth: 1,
+        width: '100%',
+        padding: 6
+    },
+    buttonContainer: {
+
+    },
+    inputContainer: {
+
+    },
+    logoContainer:{
+        alignItems:'center',
+       // borderColor: 'orange',
+        //borderWidth:1,
+        flex: 4
+
+    },
+    logo:{
+        maxWidth:'100%',
+        maxHeight: '100%',
+
+    },
+    interactiveContainer:{
+        flex:3
+    },
 })
 
 export default LogInScreen

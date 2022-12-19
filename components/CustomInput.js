@@ -35,23 +35,26 @@ const styles = StyleSheet.create({
     borderWidth: .5,
     borderRadius: 3,
     padding: 6,
-    width: '80%',
-    height: '100%'
+    width:'100%',
+    height: 50
+    
   },
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 6,
+    marginVertical:3
+
 
   },
 
   container_LOGIN: {
-    width: '90%',
-    height: '10%',
-    justifyContent: 'center'
+    marginBottom: 6,
+    justifyContent: 'center',
   },
 
   input_LOGIN: {
+    width:'100%',
+    height: 50
   },
 })
 
